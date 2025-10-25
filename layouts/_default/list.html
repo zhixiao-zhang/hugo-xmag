@@ -3,14 +3,14 @@
 <div class="container">
 <main class="list">
 {{ $pages := .Pages }}
-{{ if .IsHome }}{{ $pages = .Site.RegularPages }}{{ end }}
+{{ if .IsHome }}{{ $pages = where .Site.RegularPages "Section" "post" }}{{ end }}
 {{ $paginator := .Paginate (where $pages "Section" "!=" "") }}
 {{ range $paginator.Pages }}
 <section class="article-list">
   <div class="categories">
   {{ with .Params.categories }}
   {{ range first 1 . }}
-    <a href="{{ relURL (print "/categories/" . | urlize) }}">{{ . }}</a>
+    <a href="{{ absLangURL (print "/categories/" . | urlize) }}">{{ . }}</a>
   {{ end }}
   {{ else }}
     <a>{{ default "Uncategorized" .Site.Params.text.uncategorized }}</a>
@@ -19,7 +19,9 @@
   <h1><a href="{{ .RelPermalink }}">{{ .Title }}</a></h1>
   <div class="date-author">
     {{ if .Params.author }}<span class="author">{{ partial "author_names.html" . }}</span> / {{ end }}
-    <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+    {{ with .Params.date }}
+    <span class="date">{{ time . | dateFormat "2006-01-02" }}</span>
+    {{ end }}    
   </div>
   <div class="summary">
     <a href="{{ .RelPermalink }}">

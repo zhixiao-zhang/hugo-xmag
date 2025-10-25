@@ -173,6 +173,12 @@ tr:nth-child(even) { background: #eee }
   width: 50%;
   margin-left: 0;
 }
+p > img {
+  display: block;
+  margin: 0 auto;
+  max-width: 75%;
+}
+
 /* break long words */
 p, ul, ol, h1, h2, h3, h4, h5, h6 {
     overflow-wrap: break-word;
