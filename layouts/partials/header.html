@@ -13,12 +13,22 @@
     {{ partial "head_custom.html" . }}
   </head>
 
-  <body{{if .IsPage}} class="page"{{ end }}>
+  {{ $isTerms := or (eq .Kind "taxonomy") (eq .Kind "term") }}
+  <body{{ if or .IsPage $isTerms }} class="{{ if .IsPage }}page{{ end }}{{ if $isTerms }} terms-body{{ end }}"{{ end }}>
     <nav class="header">
       {{ partial "banner.html" . }}
       <div class="head-meta">
       {{ if .IsPage }}
-        <span><a href="{{ relURL .Site.BaseURL }}">{{ (default "Back to Home" .Site.Params.text.back) | safeHTML }}</a></span>
+        {{ $backText := or (i18n "back_home") .Site.Params.text.back "Back to Home" }}
+        {{ $backURL := .Site.BaseURL }}
+        {{ with .CurrentSection }}
+          {{ if ne .RelPermalink .Site.Home.RelPermalink }}
+            {{ $sectionKey := printf "back_section_%s" .Section }}
+            {{ $backText = or (i18n $sectionKey) (printf "Back to %s" .Title) }}
+            {{ $backURL = .RelPermalink }}
+          {{ end }}
+        {{ end }}
+        <span><a class="back-home" href="{{ relURL $backURL }}">{{ $backText | safeHTML }}</a></span>
         {{ if .Params.date }}<span class="date">{{ .Date.Format "2006-01-02" }}</span>{{ end }}
         {{ if .File.Path }}
           {{ $.Scratch.Set "FilePath" (replace .File.Path "\\" "/") }}

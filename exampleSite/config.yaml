@@ -36,6 +36,9 @@ params:
   footer: "&copy; [Yihui Xie](https://yihui.org) 2017 - 2023 | [Github](https://github.com/yihui) | [Twitter](https://twitter.com/xieyihui)"
   github_edit: "https://github.com/yihui/hugo-xmag/edit/master/exampleSite/content/"
   summary_length: 300
+  terms_exclude:
+    - "uncategorized"
+    - "drafts"
   text:
     back: "&larr; Back to Home"
     edit: "Edit this page &rarr;"

@@ -5,7 +5,7 @@
 
   <div class="categories">
   {{ range $i, $e := .Params.categories }}
-    {{ if $i }} &hercon; {{ end }}<a href="{{ relURL (print "/categories/" $e | urlize) }}">{{ $e }}</a>
+    {{ if $i }} &hercon; {{ end }}<a href="{{ absLangURL (print "/categories/" $e | urlize) }}">{{ $e }}</a>
   {{ end }}
   </div>
 
