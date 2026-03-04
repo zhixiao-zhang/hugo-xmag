@@ -28,7 +28,16 @@
             {{ $backURL = .RelPermalink }}
           {{ end }}
         {{ end }}
-        <span><a class="back-home" href="{{ relURL $backURL }}">{{ $backText | safeHTML }}</a></span>
+        {{ $finalURL := "/" }} 
+        {{ if eq .Section "post" }}
+          {{ $finalURL = "/" }}
+        {{ else }}
+          {{ $finalURL = relURL $backURL }}
+        {{ end }}
+        <span>
+          <a class="back-home" href="{{ $finalURL }}">{{ $backText | safeHTML }}</a>
+        </span>
+
         {{ if .Params.date }}<span class="date">{{ .Date.Format "2006-01-02" }}</span>{{ end }}
         {{ if .File.Path }}
           {{ $.Scratch.Set "FilePath" (replace .File.Path "\\" "/") }}

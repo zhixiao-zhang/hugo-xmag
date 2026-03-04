@@ -299,6 +299,10 @@ body.terms-body .terms-page .terms-card:hover .terms-cta {
   color: #fff;
 }
 
+ruby rt {
+  font-size: 0.9em;
+}
+
 @keyframes terms-rise {
   from {
     opacity: 0;
